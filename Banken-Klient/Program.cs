@@ -17,7 +17,7 @@ namespace Banken_Klient
 
             tcpStream = tcpClient.GetStream();
 
-            Console.WriteLine("Välkommen till den här bank liknande applikationen"); 
+            Console.WriteLine("Välkommen till den här bank liknande applikationen");
 
             ChooseCostumerLoop(tcpClient);
 
@@ -103,7 +103,7 @@ namespace Banken_Klient
         static void CreateCostumer()
         {
             string name = SecureInput2<string>("Vad heter du: ");
-            Costumer c = new Costumer(name); //SKICKA TILL SERVER
+            Costumer c = new Costumer(name);
 
             byte[] cByte = c.ToByte("0");
             // Skicka iväg meddelandet:
@@ -134,6 +134,7 @@ namespace Banken_Klient
                 {
                     sort = SecureInput2<string>("Vill du skapa ett spar eller lönekonto (s/l): ");
 
+                    //Kollar så att antingen s eller l är angivet
                     if (sort != "s" && sort != "S" && sort != "l" && sort != "L")
                         throw new Exception("Du måste ange antingen \"s\" eller \"l\"");
                     break;
@@ -152,6 +153,7 @@ namespace Banken_Klient
                     try
                     {
                         interest = SecureInput2<int>("Vilken ränta vill du ha i procent: ");
+                        //Ser till att räntan inte är högre än 10%
                         if (interest >= 10) throw new Exception("Räntan får inte vara 10% eller mer. Försök igen");
                         break;
                     }
@@ -171,6 +173,7 @@ namespace Banken_Klient
                     try
                     {
                         tax = SecureInput2<int>("Vilken ränta vill du ha i procent: ");
+                        //Ser till att skatten inte är lägre än 10%
                         if (tax <= 10) throw new Exception("Räntan får inte vara 10% eller mindre. Försök igen");
                         break;
                     }
@@ -225,9 +228,9 @@ namespace Banken_Klient
         static MyList<Account>? ShowAccounts()
         {
             MyList<Account>? accounts = RetriveAccounts();
-            //Visar kontonen
             if (accounts != null)
             {
+                //Visar kontonen
                 for (int i = 0; i < accounts.Count; i++)
                 {
                     accounts[i].ShowAccount();
@@ -257,7 +260,7 @@ namespace Banken_Klient
 
             return null;
         }
-        
+
         public static string[] RetriveId()
         {
             byte[] mByte = Encoding.UTF8.GetBytes("7");
@@ -270,7 +273,7 @@ namespace Banken_Klient
             string read = "";
             for (int i = 0; i < bReadSize; i++)
                 read += Convert.ToChar(bRead[i]);
-            //Konvertera sträng från servern till olika Account objekt
+            //Delar upp strängen
             char[] pattern = {'$'}; //$ används som skiljetecken
             string[] splitedString =
                 read.Split(pattern, StringSplitOptions.RemoveEmptyEntries);
@@ -291,8 +294,8 @@ namespace Banken_Klient
                 Console.WriteLine("\nDet fanns inget att hämta. Skapa något först.");
                 return null;
             }
-            
-            //Konvertera sträng från servern till olika Account objekt
+
+            //Delar upp strängen
             char[] pattern = {'$'}; //$ används som skiljetecken
             string[] splitedString =
                 read.Split(pattern, StringSplitOptions.RemoveEmptyEntries);
@@ -306,7 +309,6 @@ namespace Banken_Klient
             tcpStream.Write(mByte, 0, mByte.Length);
 
             string[]? splitedString = Retrive();
-            //Tömmer befintliga meddelanden ifall användaren har hämtat tidigare
             MyList<Costumer> costumers = new MyList<Costumer>();
             //Kolla ifall det finns meddelanden
             if (splitedString != null)
@@ -331,7 +333,6 @@ namespace Banken_Klient
             tcpStream.Write(mByte, 0, mByte.Length);
             //Hämta meddelandet
             string[]? splitedString = Retrive();
-            //Tömmer befintliga meddelanden ifall användaren har hämtat tidigare
             MyList<Account> accounts = new MyList<Account>();
             //Kolla ifall det finns meddelanden
             if (splitedString != null)
@@ -395,7 +396,7 @@ namespace Banken_Klient
                     string? input = Console.ReadLine();
                     int number;
 
-                    //Se ifall strängen är koverterbar till int. Om den är det ges variablen number inputs värde.
+                    //Se ifall strängen är koverterbar till int. Om den är det ges variablen number, inputs värde.
                     if (!int.TryParse(input, out number))
                         throw new NotANumberException();
 
@@ -421,6 +422,7 @@ namespace Banken_Klient
                     Console.Write(text);
                     string input = Console.ReadLine()!;
 
+                    //Kollar ifall det är en int som ska matas in
                     if (typeof(T) == typeof(int))
                     {
                         int intInput;
@@ -429,9 +431,8 @@ namespace Banken_Klient
                     }
 
                     if (input.Contains("@"))
-                    {
                         throw new Exception("Snabel-a \"@\"tecknet för inte användas. Försök igen");
-                    }
+
 
                     return (T) (object) input;
                 }
@@ -452,6 +453,7 @@ namespace Banken_Klient
 
                     T? a = default(T);
 
+                    //Kollar ifall ett obekt med det givna id-nummret finns
                     for (int i = 0; i < list.Count; i++)
                     {
                         if (((list[i] as Common)!).GetId() == id)
@@ -460,6 +462,7 @@ namespace Banken_Klient
                         }
                     }
 
+                    //Kasta en exception ifall det angivna id-nummret inte finns
                     if (a == null) throw new Exception("Något med det id-nummeret verkar inte finnas. Försök igen");
                     return a;
                 }

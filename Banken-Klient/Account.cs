@@ -26,6 +26,7 @@ namespace Banken_Klient
 
         public Account(string text)
         {
+            //Delar upp strängen och tilldelar dess värden
             string[] splitedString = text.Split('@');
 
             name = splitedString[0];
@@ -37,17 +38,11 @@ namespace Banken_Klient
         {
             this.name = name;
             this.balance = balance;
-            id = int.Parse(Program.RetriveId()![0]) + 1;
+            //Hämtar tidigare högsta id-nummer och lägger till 1
+            id = int.Parse(Program.RetriveId()![0]) + 1; 
 
         }
 
-        public Account(int balance, int? _, int id)
-        {
-            name = "";
-            this.balance = balance;
-            this.id = id;
-        }
-        
         public void ChangeBalance(int balance)
         {
             this.balance = balance;

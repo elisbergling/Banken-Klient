@@ -28,6 +28,7 @@ namespace Banken_Klient
 
         public Costumer(string text, int? _)
         {
+            //Delar upp strängen och tilldelar dess värden
             string[] splitedString = text.Split('@');
 
             name = splitedString[0];
@@ -38,6 +39,7 @@ namespace Banken_Klient
         public Costumer(string name)
         {
             this.name = name;
+            //Hämtar tidigare högsta id-nummer och lägger till 1
             userId = int.Parse(Program.RetriveId()![1]) + 1;
             accounts = new MyList<Account>();
         }
