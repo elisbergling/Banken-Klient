@@ -1,0 +1,6 @@
+C:\Users\elis.bergling\RiderProjects\Banken-Klient\Banken-Klient\bin\Debug\Banken_Klient.exe
+C:\Users\elis.bergling\RiderProjects\Banken-Klient\Banken-Klient\bin\Debug\Banken_Klient.pdb
+C:\Users\elis.bergling\RiderProjects\Banken-Klient\Banken-Klient\obj\Debug\Banken-Klient.csprojAssemblyReference.cache
+C:\Users\elis.bergling\RiderProjects\Banken-Klient\Banken-Klient\obj\Debug\Banken-Klient.csproj.CoreCompileInputs.cache
+C:\Users\elis.bergling\RiderProjects\Banken-Klient\Banken-Klient\obj\Debug\Banken_Klient.exe
+C:\Users\elis.bergling\RiderProjects\Banken-Klient\Banken-Klient\obj\Debug\Banken_Klient.pdb
